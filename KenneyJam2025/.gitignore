@@ -97,3 +97,13 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Bezi
+/Packages/com.bezi.sidekick/
+
+# Bezi user data and caches
+.bezi/
+*.bezi
+.bezi-*
+# JetBrains Rider
+.idea/
