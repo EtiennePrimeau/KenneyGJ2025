@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
     [Header("Scene Management")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string launcherSceneName = "Launcher";
+    
+    [Header("Audio Management")]
+    [SerializeField] private GameAudioManager gameAudioManager;
+    
 
     private void Awake()
     {
@@ -27,23 +31,26 @@ public class GameManager : MonoBehaviour
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         if (currentSceneName == launcherSceneName)
-            LoadMainMenu();
+            LoadMainMenu(true);
     }
 
-    private void LoadMainMenu()
+    private void LoadMainMenu(bool isLaunching = false)
     {
         SceneManager.LoadScene(mainMenuSceneName);
+        gameAudioManager.SetGameState(GameAudioManager.GameState.Menu, true);
     }
 
-    public void GoToMainMenu()
-    {
-        SceneManager.LoadScene(mainMenuSceneName);
-    }
-
-    // Example method for loading other scenes
     public void LoadScene(string sceneName)
     {
+        if (sceneName == mainMenuSceneName)
+        {
+            LoadMainMenu();
+            return;
+        }
+        
         SceneManager.LoadScene(sceneName);
+        if (gameAudioManager.State != GameAudioManager.GameState.Game)
+            gameAudioManager.SetGameState(GameAudioManager.GameState.Game);
     }
 
     private void OnDestroy()
