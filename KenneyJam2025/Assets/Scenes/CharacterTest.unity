@@ -451,8 +451,10 @@ MonoBehaviour:
   _rightShoulder: {fileID: 49783098}
   _leftShoulder: {fileID: 1064632191}
   _characterMiddle: {fileID: 1914045272}
-  _impulseStrength: 5
-  _shoulderRotationSpeed: 5
+  _rightArmSpriteRenderer: {fileID: 1077485268}
+  _leftArmSpriteRenderer: {fileID: 62444709}
+  _impulseStrength: 10
+  _shoulderRotationSpeed: 100
 --- !u!1 &981815935
 GameObject:
   m_ObjectHideFlags: 0
