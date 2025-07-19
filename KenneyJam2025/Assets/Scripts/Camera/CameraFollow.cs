@@ -6,6 +6,8 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Vector3 _offset = new Vector3(0.0f, 0.0f, -10.0f);
     [SerializeField] private float _smoothSpeed = 5.0f;
     [SerializeField] private float _maxDistance = 3.0f;
+    [SerializeField] private float _minY = 0f;
+    [SerializeField] private float _minX = -10f;
 
     private void FixedUpdate()
     {
@@ -19,6 +21,10 @@ public class CameraFollow : MonoBehaviour
             smoothedPosition = _character.position + _offset + delta;
         }
 
+        if (smoothedPosition.y < _minY)
+            smoothedPosition.y = _minY;
+        if (smoothedPosition.x < _minX)
+            smoothedPosition.x = _minX;
         transform.position = smoothedPosition;
     }
 }

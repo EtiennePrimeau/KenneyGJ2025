@@ -53,6 +53,12 @@ public class GameManager : MonoBehaviour
             gameAudioManager.SetGameState(GameAudioManager.GameState.Game);
     }
 
+    public void ReloadLevel()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
+    
     private void OnDestroy()
     {
         if (Instance == this)
