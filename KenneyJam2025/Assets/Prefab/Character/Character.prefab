@@ -349,7 +349,7 @@ MonoBehaviour:
   _rightArmSpriteRenderer: {fileID: 8487548062894723973}
   _leftArmSpriteRenderer: {fileID: 1370252387040696852}
   _impulseStrength: 10
-  _shoulderRotationSpeed: 200
+  _shoulderRotationSpeed: 250
   _idlingDelay: 5
 --- !u!50 &1172278223166534266
 Rigidbody2D:
