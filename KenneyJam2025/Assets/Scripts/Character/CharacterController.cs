@@ -58,13 +58,13 @@ public class CharacterController : MonoBehaviour
 
     private void GetCurrentFrameCharacterInput()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
             SetDirection(CharacterInputDirection.Up);
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
             SetDirection(CharacterInputDirection.Down);
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
             SetDirection(CharacterInputDirection.Left);
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
             SetDirection(CharacterInputDirection.Right);
 
         if (Input.GetKeyDown(KeyCode.Space))
