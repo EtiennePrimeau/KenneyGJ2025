@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class CharacterController : MonoBehaviour
 {    
@@ -11,6 +11,7 @@ public class CharacterController : MonoBehaviour
 
     [Header("SETTINGS")]
     [SerializeField] private float _impulseStrength = 5.0f;
+    [SerializeField] private float _maxVelocity = 5.0f;
     [SerializeField] private float _shoulderRotationSpeed = 5.0f;
     [SerializeField] private float _idlingDelay = 5.0f;
     
@@ -43,7 +44,7 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
-        GetCurrentFrameCharacterInput();        
+        GetCurrentFrameCharacterInput();
     }
 
     private void FixedUpdate()
@@ -54,6 +55,8 @@ public class CharacterController : MonoBehaviour
             _applyImpulseNextFixedUpdate = false;
         }
         UpdateShoulderRotation();
+
+        CapVelocity();
     }
 
     private void GetCurrentFrameCharacterInput()
@@ -275,7 +278,6 @@ public class CharacterController : MonoBehaviour
 
         while (_beforeIdlingTimer < _idlingDelay)
         {
-            // If interrupted by new direction input
             if (_currentDirectionInputed == CharacterInputDirection.None || _isIdling)
             {
                 _idlingTimerCoroutine = null;
@@ -291,6 +293,36 @@ public class CharacterController : MonoBehaviour
         _areArmsSynchronized = false;
         _isIdling = true;
         _idlingTimerCoroutine = null;
+    }
+
+    private void CapVelocity()
+    {
+        Vector2 velocity = _rb.linearVelocity;
+
+        if (velocity == Vector2.zero)
+            return;
+
+        float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+
+        // Bigger downward buffer
+        //if (angle >= -165.0f && angle <= -15.0f)
+        //{
+        //    Debug.Log($"Skipping cap — moving broadly downward (angle: {angle}°)");
+        //    return;
+        //}
+
+        // Tighter downward buffer
+        if (angle >= -100.0f && angle <= -80.0f)
+        {
+            //Debug.Log($"Skipping cap — moving almost directly downward (angle: {angle}°)");
+            return;
+        }
+
+        if (velocity.magnitude > _maxVelocity)
+        {
+            //Debug.Log($"Capping velocity from {velocity.magnitude} to {_maxVelocity} (angle: {angle}°)");
+            _rb.linearVelocity = velocity.normalized * _maxVelocity;
+        }
     }
 
     private bool ApproximatelyAngle(float a, float b, float tolerance = 1f)
