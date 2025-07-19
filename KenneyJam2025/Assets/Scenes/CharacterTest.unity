@@ -362,7 +362,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &82709820
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -455,6 +455,7 @@ MonoBehaviour:
   _leftArmSpriteRenderer: {fileID: 62444709}
   _impulseStrength: 10
   _shoulderRotationSpeed: 100
+  _idlingDelay: 5
 --- !u!1 &981815935
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +747,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1510638537}
   - component: {fileID: 1510638536}
+  - component: {fileID: 1510638539}
   - component: {fileID: 1510638535}
   - component: {fileID: 1510638538}
   m_Layer: 0
@@ -873,6 +875,22 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1510638539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510638534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4299e462e940745be9a6954278c7d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _character: {fileID: 82709821}
+  _offset: {x: 0, y: 0, z: -10}
+  _smoothSpeed: 5
+  _maxDistance: 1
 --- !u!1 &1914045271
 GameObject:
   m_ObjectHideFlags: 0

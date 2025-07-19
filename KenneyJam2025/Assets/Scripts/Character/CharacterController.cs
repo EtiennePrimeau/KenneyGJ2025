@@ -31,8 +31,9 @@ public class CharacterController : MonoBehaviour
     private float _beforeIdlingTimer = 0.0f;
     private bool _areArmsSynchronized = false;
     private bool _isIdling = false;
+    private bool _applyImpulseNextFixedUpdate = false;
 
-    void Start()
+    private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
 
@@ -40,10 +41,18 @@ public class CharacterController : MonoBehaviour
         _areArmsSynchronized = false;
     }
 
-    void Update()
+    private void Update()
     {
-        GetCurrentFrameCharacterInput();
-        ApplyImpulseToDirecion();
+        GetCurrentFrameCharacterInput();        
+    }
+
+    private void FixedUpdate()
+    {
+        if (_applyImpulseNextFixedUpdate)
+        {
+            ApplyImpulseToDirecion();
+            _applyImpulseNextFixedUpdate = false;
+        }
         UpdateShoulderRotation();
     }
 
@@ -57,6 +66,11 @@ public class CharacterController : MonoBehaviour
             SetDirection(CharacterInputDirection.Left);
         else if (Input.GetKeyDown(KeyCode.D))
             SetDirection(CharacterInputDirection.Right);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _applyImpulseNextFixedUpdate = true;
+        }
 
         //Debug.Log("The current impulse direction will be " + _currentDirectionInputed.ToString());
     }
@@ -89,20 +103,17 @@ public class CharacterController : MonoBehaviour
 
     private void ApplyImpulseToDirecion()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        Vector2 impulseDirection = Vector2.zero;
+
+        if (!_areArmsSynchronized)
         {
-            Vector2 impulseDirection = Vector2.zero;
+            impulseDirection = Vector3.up;
+            _rb.AddForce(impulseDirection.normalized * 1, ForceMode2D.Impulse);
+            return;
+        }
 
-            if (!_areArmsSynchronized)
-            {
-                impulseDirection = Vector3.up; // assuming arm points to the right at rest
-                _rb.AddForce(impulseDirection.normalized * 1, ForceMode2D.Impulse);
-                return;
-            }
-
-            impulseDirection = _currentShoulderRotation * Vector3.right; // assuming arm points to the right at rest
-            _rb.AddForce(impulseDirection.normalized * _impulseStrength, ForceMode2D.Impulse);
-        }        
+        impulseDirection = _currentShoulderRotation * Vector3.right;
+        _rb.AddForce(impulseDirection.normalized * _impulseStrength, ForceMode2D.Impulse);
     }
 
     // TODO optimization à faire ici pour pas faire de update quand on est déjà arrivé à la rotation cible
