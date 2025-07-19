@@ -58,7 +58,7 @@ public class CharacterController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.D))
             SetDirection(CharacterInputDirection.Right);
 
-        Debug.Log("The current impulse direction will be " + _currentDirectionInputed.ToString());
+        //Debug.Log("The current impulse direction will be " + _currentDirectionInputed.ToString());
     }
 
     private void SetDirection(CharacterInputDirection direction)
@@ -128,7 +128,7 @@ public class CharacterController : MonoBehaviour
             _rightShoulder.localRotation = _currentShoulderRotation;
             _leftShoulder.localRotation = _currentShoulderRotation;
 
-            Debug.LogError("Still here");
+            //Debug.LogError("Still here");
 
             UpdateArmsOrderInLayer();
 
