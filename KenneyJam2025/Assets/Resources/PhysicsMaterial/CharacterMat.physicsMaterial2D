@@ -6,7 +6,7 @@ PhysicsMaterial2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CharcterMat
+  m_Name: CharacterMat
   serializedVersion: 2
   friction: 10
   bounciness: 0
