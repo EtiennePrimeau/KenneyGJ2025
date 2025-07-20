@@ -299,6 +299,7 @@ MonoBehaviour:
   _maxVelocity: 5
   _shoulderRotationSpeed: 300
   _idlingDelay: 5
+  _maxImpulseCooldown: 0.3
 --- !u!50 &1172278223166534266
 Rigidbody2D:
   serializedVersion: 5
