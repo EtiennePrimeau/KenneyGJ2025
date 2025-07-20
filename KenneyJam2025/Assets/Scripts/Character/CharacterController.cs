@@ -8,6 +8,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private Transform _characterMiddle = null;
     [SerializeField] private SpriteRenderer _rightArmSpriteRenderer = null;
     [SerializeField] private SpriteRenderer _leftArmSpriteRenderer = null;
+    [SerializeField] private AudioClip _impulseSoundFX = null;
 
     [Header("SETTINGS")]
     [SerializeField] private float _impulseStrength = 5.0f;
@@ -25,6 +26,7 @@ public class CharacterController : MonoBehaviour
     private const int SecondPlanOrderInLayer = 1;
 
     private Rigidbody2D _rb = null;
+    private AudioSource _soundFXAudioSource = null;
     private CharacterInputDirection _currentDirectionInputed = CharacterInputDirection.None;
     private Quaternion _targetShoulderRotation;
     private Quaternion _currentShoulderRotation;
@@ -37,6 +39,7 @@ public class CharacterController : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _soundFXAudioSource = GetComponent<AudioSource>();
 
         DefaultRotateShoulders();
         _areArmsSynchronized = false;
@@ -108,6 +111,10 @@ public class CharacterController : MonoBehaviour
     {
         Vector2 impulseDirection = Vector2.zero;
 
+        _beforeIdlingTimer = 0.0f;
+
+        PlayImpulseSoundFX();
+
         if (!_areArmsSynchronized)
         {
             impulseDirection = Vector3.up;
@@ -116,7 +123,14 @@ public class CharacterController : MonoBehaviour
         }
 
         impulseDirection = _currentShoulderRotation * Vector3.right;
-        _rb.AddForce(impulseDirection.normalized * _impulseStrength, ForceMode2D.Impulse);
+        _rb.AddForce(impulseDirection.normalized * _impulseStrength, ForceMode2D.Impulse);        
+    }
+
+    private void PlayImpulseSoundFX()
+    {        
+        _soundFXAudioSource.pitch = Random.Range(0.90f, 1.1f);
+        float volume = Random.Range(0.8f, 1.0f);
+        _soundFXAudioSource.PlayOneShot(_impulseSoundFX, volume);
     }
 
     // TODO optimization à faire ici pour pas faire de update quand on est déjà arrivé à la rotation cible

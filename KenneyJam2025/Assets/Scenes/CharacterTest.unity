@@ -1937,6 +1937,8 @@ MonoBehaviour:
   _offset: {x: 0, y: 0, z: -10}
   _smoothSpeed: 5
   _maxDistance: 1
+  _minY: 0
+  _minX: -10
 --- !u!1 &1653504058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2630,10 +2632,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
-    - target: {fileID: 7225115647917539799, guid: 1d448885b19ded3468b266605fa6705c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2652,10 +2650,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1768904569936722425, guid: f7510445914586e42b5b0acbe1d22019, type: 3}
-      propertyPath: _swapDuration
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2406649457278998767, guid: f7510445914586e42b5b0acbe1d22019, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
