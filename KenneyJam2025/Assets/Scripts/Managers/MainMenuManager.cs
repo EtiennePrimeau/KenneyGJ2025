@@ -83,7 +83,7 @@ public class MainMenuManager : MonoBehaviour
         {
             if (GameManager.Instance != null)
             {
-                if (i < GameManager.Instance.MaxLevel) 
+                if (i < GameManager.Instance.MaxLevel + 1) 
                     levelButtons[i].interactable = true;
                 else
                     levelButtons[i].interactable = false;

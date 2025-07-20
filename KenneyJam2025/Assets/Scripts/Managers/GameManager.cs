@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,13 +10,18 @@ public class GameManager : MonoBehaviour
     [Header("Scene Management")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string launcherSceneName = "Launcher";
+    [SerializeField] private string endMenuSceneName = "EndMenu";
     
     [Header("Audio Management")]
     [SerializeField] private GameAudioManager gameAudioManager;
 
     private int maxLevel = 0;
-    
     public int MaxLevel => maxLevel;
+
+    private float timer = 0f;
+    public float timerAdd = 10f;
+    private bool timerRunning = false;
+    public TextMeshProUGUI timerText;
 
     private void Awake()
     {
@@ -37,10 +44,34 @@ public class GameManager : MonoBehaviour
             LoadMainMenu(true);
     }
 
+    private void Update()
+    {
+        if (timerRunning)
+        {
+            timer -= Time.deltaTime;
+            timerText.text = timer.ToString("F2");
+            if (timer < 0f)
+                EndGame();
+        }
+    }
+
+    private void EndGame()
+    {
+        Debug.Log("Game Over");
+        SceneManager.LoadScene(endMenuSceneName);
+        timerRunning = false;
+        timerText.gameObject.SetActive(false);
+    }
+
+    public void RestartLevels()
+    {
+        LoadMainMenu(false);
+    }
+    
     private void LoadMainMenu(bool isLaunching = false)
     {
-        if (isLaunching)
-            maxLevel = 1;
+        timer = 0f;
+        timerText.gameObject.SetActive(false);
         SceneManager.LoadScene(mainMenuSceneName);
         gameAudioManager.SetGameState(GameAudioManager.GameState.Menu, true);
     }
@@ -54,6 +85,9 @@ public class GameManager : MonoBehaviour
         }
         
         SceneManager.LoadScene(sceneName);
+        timerRunning = true;
+        timer = timerAdd;
+        timerText.gameObject.SetActive(true);
         if (gameAudioManager.State != GameAudioManager.GameState.Game)
             gameAudioManager.SetGameState(GameAudioManager.GameState.Game);
     }
@@ -66,6 +100,7 @@ public class GameManager : MonoBehaviour
 
     public void FinishLevel(int finishedLevel)
     {
+        timer += timerAdd;
         if (finishedLevel > maxLevel)
             maxLevel =  finishedLevel;
         
