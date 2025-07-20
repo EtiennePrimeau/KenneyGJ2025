@@ -15,7 +15,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float _maxVelocity = 5.0f;
     [SerializeField] private float _shoulderRotationSpeed = 5.0f;
     [SerializeField] private float _idlingDelay = 5.0f;
-    
+    [SerializeField] private float _maxImpulseCooldown = 0.5f;
+
     private static readonly Vector3 DefaultRightShouldRotation = new Vector3(0.0f, 0.0f, 0.0f);
     private static readonly Vector3 DefaultLeftShouldRotation = new Vector3(0.0f, 0.0f, 180.0f);
     private static readonly Vector3 UpShoulderRotation = new Vector3(0.0f, 0.0f, 90.0f);
@@ -32,6 +33,7 @@ public class CharacterController : MonoBehaviour
     private Quaternion _currentShoulderRotation;
     private Coroutine _idlingTimerCoroutine = null;
     private float _beforeIdlingTimer = 0.0f;
+    private float _impulseCooldownTimer = 0.0f;
     private bool _areArmsSynchronized = false;
     private bool _isIdling = false;
     private bool _applyImpulseNextFixedUpdate = false;
@@ -48,6 +50,7 @@ public class CharacterController : MonoBehaviour
     private void Update()
     {
         GetCurrentFrameCharacterInput();
+        _impulseCooldownTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -73,7 +76,7 @@ public class CharacterController : MonoBehaviour
         else if (Input.GetKey(KeyCode.D))
             SetDirection(CharacterInputDirection.Right);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && _impulseCooldownTimer < 0)
         {
             _applyImpulseNextFixedUpdate = true;
         }
@@ -112,6 +115,7 @@ public class CharacterController : MonoBehaviour
         Vector2 impulseDirection = Vector2.zero;
 
         _beforeIdlingTimer = 0.0f;
+        _impulseCooldownTimer = _maxImpulseCooldown;
 
         PlayImpulseSoundFX();
 
