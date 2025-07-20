@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string launcherSceneName = "Launcher";
     [SerializeField] private string endMenuSceneName = "EndMenu";
+    [SerializeField] private string winMenuSceneName = "WinMenu";
     
     [Header("Audio Management")]
     [SerializeField] private GameAudioManager gameAudioManager;
@@ -104,6 +105,12 @@ public class GameManager : MonoBehaviour
         timer += timerAdd;
         if (finishedLevel > maxLevel)
             maxLevel =  finishedLevel;
+
+        if (finishedLevel == 6) // last level
+        {
+            SceneManager.LoadScene(winMenuSceneName);
+            return;
+        }
         
         string sceneName = "Level" + (finishedLevel + 1);
         Debug.Log(sceneName);
