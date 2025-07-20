@@ -296,8 +296,9 @@ MonoBehaviour:
   _leftArmSpriteRenderer: {fileID: 1370252387040696852}
   _impulseSoundFX: {fileID: 8300000, guid: fb866e3796ba20b4fbd86a389555f9b0, type: 3}
   _impulseStrength: 5
+  _impulseMultiplier: 0.5
   _maxVelocity: 5
-  _shoulderRotationSpeed: 300
+  _shoulderRotationSpeed: 375
   _idlingDelay: 5
   _maxImpulseCooldown: 0.2
 --- !u!50 &1172278223166534266

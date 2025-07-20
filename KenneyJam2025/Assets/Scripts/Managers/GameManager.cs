@@ -108,6 +108,8 @@ public class GameManager : MonoBehaviour
 
         if (finishedLevel == 6) // last level
         {
+            timerRunning = false;
+            timerText.gameObject.SetActive(false);
             SceneManager.LoadScene(winMenuSceneName);
             return;
         }
