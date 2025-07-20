@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
     public int MaxLevel => maxLevel;
 
     private float timer = 0f;
-    public float timerAdd = 10f;
+    public float timerAdd = 5f;
+    public float timerStart = 20f;
     private bool timerRunning = false;
     public TextMeshProUGUI timerText;
 
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour
         
         SceneManager.LoadScene(sceneName);
         timerRunning = true;
-        timer = timerAdd;
+        timer = timerStart;
         timerText.gameObject.SetActive(true);
         if (gameAudioManager.State != GameAudioManager.GameState.Game)
             gameAudioManager.SetGameState(GameAudioManager.GameState.Game);
