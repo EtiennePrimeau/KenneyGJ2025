@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour
     
     [Header("Audio Management")]
     [SerializeField] private GameAudioManager gameAudioManager;
+
+    private int maxLevel = 0;
     
+    public int MaxLevel => maxLevel;
 
     private void Awake()
     {
@@ -36,6 +39,8 @@ public class GameManager : MonoBehaviour
 
     private void LoadMainMenu(bool isLaunching = false)
     {
+        if (isLaunching)
+            maxLevel = 1;
         SceneManager.LoadScene(mainMenuSceneName);
         gameAudioManager.SetGameState(GameAudioManager.GameState.Menu, true);
     }
@@ -57,6 +62,16 @@ public class GameManager : MonoBehaviour
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
+    }
+
+    public void FinishLevel(int finishedLevel)
+    {
+        if (finishedLevel > maxLevel)
+            maxLevel =  finishedLevel;
+        
+        string sceneName = "Level" + (finishedLevel + 1);
+        Debug.Log(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
     
     private void OnDestroy()

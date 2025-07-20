@@ -13,6 +13,7 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("Level Selection Buttons")]
     public Button backButton;
+    public Button[] levelButtons;
     
     void Start()
     {
@@ -77,5 +78,18 @@ public class MainMenuManager : MonoBehaviour
             
         if (levelSelectionCanvas != null)
             levelSelectionCanvas.SetActive(true);
+
+        for (int i = 0; i < levelButtons.Length; i++)
+        {
+            if (GameManager.Instance != null)
+            {
+                if (i < GameManager.Instance.MaxLevel) 
+                    levelButtons[i].interactable = true;
+                else
+                    levelButtons[i].interactable = false;
+            }
+                    
+                
+        }
     }
 }
