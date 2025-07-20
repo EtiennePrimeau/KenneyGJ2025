@@ -12,6 +12,7 @@ public class CharacterController : MonoBehaviour
 
     [Header("SETTINGS")]
     [SerializeField] private float _impulseStrength = 5.0f;
+    [SerializeField] private float _impulseMultiplier = 0.5f;
     [SerializeField] private float _maxVelocity = 5.0f;
     [SerializeField] private float _shoulderRotationSpeed = 5.0f;
     [SerializeField] private float _idlingDelay = 5.0f;
@@ -42,6 +43,8 @@ public class CharacterController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _soundFXAudioSource = GetComponent<AudioSource>();
+
+        _impulseStrength += (GameManager.Instance.MaxLevel * _impulseMultiplier);
 
         DefaultRotateShoulders();
         _areArmsSynchronized = false;
